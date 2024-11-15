@@ -7,10 +7,12 @@ void main() {
       (WidgetTester tester) async {
     await tester.pumpWidget(const ProviderScope(child: MyApp()));
 
-    expect(find.text('Riverpod MVVM'), findsOneWidget);
-    expect(find.text('아직 불러오지 않음'), findsOneWidget);
+    expect(find.text('Riverpod MVVM Lab'), findsOneWidget);
+    expect(find.text('대기 중'), findsOneWidget);
 
-    await tester.tap(find.text('사용자 데이터 가져오기'));
+    final fetchButton = find.text('사용자 데이터 가져오기');
+    await tester.ensureVisible(fetchButton);
+    await tester.tap(fetchButton);
     await tester.pump(const Duration(seconds: 1));
     await tester.pump();
 
