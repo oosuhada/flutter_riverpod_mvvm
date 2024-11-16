@@ -11,7 +11,7 @@ void main() {
     expect(find.text('Riverpod MVVM Lab'), findsOneWidget);
     expect(find.text('View → ViewModel → Repository'), findsOneWidget);
     expect(find.text('No profile loaded yet'), findsOneWidget);
-    expect(find.text('request 0'), findsOneWidget);
+    expect(find.text('REQUESTS'), findsOneWidget);
     expect(find.text('state v0'), findsOneWidget);
   });
 
@@ -57,6 +57,7 @@ void main() {
     await tester.pump();
 
     expect(find.text('No profile loaded yet'), findsOneWidget);
-    expect(find.text('request 0'), findsOneWidget);
+    expect(find.text('REQUESTS'), findsOneWidget);
+    expect(find.text('state v0'), findsOneWidget);
   });
 }

@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: const Color(0xFF4054D6),
+      seedColor: const Color(0xFF6D5FE5),
       brightness: Brightness.light,
     );
 
@@ -22,25 +22,31 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: colorScheme,
         useMaterial3: true,
-        scaffoldBackgroundColor: colorScheme.surface,
-        appBarTheme: const AppBarTheme(
-          centerTitle: false,
-          surfaceTintColor: Colors.transparent,
-        ),
+        scaffoldBackgroundColor: const Color(0xFFF7F8FC),
+        textTheme: ThemeData.light().textTheme.apply(
+              bodyColor: const Color(0xFF272A39),
+              displayColor: const Color(0xFF272A39),
+            ),
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
-            minimumSize: const Size.fromHeight(48),
+            backgroundColor: const Color(0xFF171A2B),
+            foregroundColor: Colors.white,
+            minimumSize: const Size.fromHeight(50),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(16),
             ),
+            textStyle: const TextStyle(fontWeight: FontWeight.w800),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
-            minimumSize: const Size.fromHeight(46),
+            foregroundColor: const Color(0xFF4E5264),
+            side: const BorderSide(color: Color(0xFFE3E4EB)),
+            minimumSize: const Size.fromHeight(47),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(15),
             ),
+            textStyle: const TextStyle(fontWeight: FontWeight.w700),
           ),
         ),
       ),
