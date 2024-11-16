@@ -499,6 +499,7 @@ class _PipelineCard extends StatelessWidget {
               },
             ),
           ),
+          const SizedBox(height: 20),
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 280),
             child: _TraceLine(
@@ -678,15 +679,15 @@ class _TraceLine extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 9),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         color: background,
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
         children: [
           Icon(icon, size: 16, color: color),
-          const SizedBox(width: 8),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(
               message,
@@ -696,6 +697,7 @@ class _TraceLine extends StatelessWidget {
                   ),
             ),
           ),
+          const SizedBox(width: 10),
           Text(
             'state v${state.stateVersion}',
             style: Theme.of(context).textTheme.labelSmall?.copyWith(
