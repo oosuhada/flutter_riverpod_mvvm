@@ -1,13 +1,10 @@
 # Flutter Riverpod MVVM Architecture Lab
 
-Riverpod `Notifier`와 MVVM 구조에서 **View → ViewModel → Repository**로 상태가 이동하는 과정을 UI에서 직접 확인할 수 있는 Flutter 포트폴리오 앱입니다.
-`idle → loading → success / error` lifecycle과 immutable state version, request count, retry/reset interaction을 하나의 architecture dashboard로 시각화합니다.
+An interactive Flutter portfolio app that visualizes how state moves through **View → ViewModel → Repository** with Riverpod `Notifier` and MVVM.
+
+Riverpod `Notifier`와 MVVM 구조에서 **View → ViewModel → Repository**로 상태가 이동하는 과정을 UI에서 직접 확인할 수 있도록 만든 Flutter 포트폴리오 앱입니다.
 
 ## Preview
-
-<p align="center">
-  <img src=".github/assets/ui-preview.png" width="320" alt="Riverpod MVVM success state" />
-</p>
 
 <table>
   <tr>
@@ -28,16 +25,17 @@ Riverpod `Notifier`와 MVVM 구조에서 **View → ViewModel → Repository**�
   </tr>
 </table>
 
-모든 이미지는 Android Emulator에서 실제 interaction을 수행한 상태를 캡처한 화면입니다.
+Captured from an Android Emulator after performing the actual interactions shown in each state.
+각 이미지는 Android Emulator에서 해당 상태로 실제 interaction을 수행한 뒤 캡처했습니다.
 
-## What it does
+## What it does / 주요 기능
 
-- `Fetch`, `Refresh`, `Simulate error`, `Reset`으로 request lifecycle을 직접 전환합니다.
-- sample JSON을 `User` 모델로 변환하고 Repository 결과를 `HomeState`에 반영합니다.
-- `request count`, `state version`, `last updated`, data source를 UI에 노출합니다.
-- success에서는 sample profile을 표시하고, error에서는 ViewModel이 잡은 repository exception과 retry 가능 상태를 보여줍니다.
+- **Interactive lifecycle** — `Fetch`, `Refresh`, `Simulate error`, `Reset`으로 `idle → loading → success / error` 흐름을 직접 전환합니다.
+- **Repository flow** — sample JSON을 `User` 모델로 변환하고 Repository 결과를 immutable `HomeState`에 반영합니다.
+- **Visible state metadata** — `request count`, `state version`, `last updated`, data source를 화면에서 바로 확인할 수 있습니다.
+- **Success & error handling** — success에서는 sample profile을 표시하고, error에서는 ViewModel이 잡은 repository exception과 retry 가능 상태를 보여줍니다.
 
-## Architecture
+## Architecture / 구조
 
 ```text
 View (ConsumerWidget)
@@ -51,32 +49,34 @@ Repository
         └──────────────► immutable HomeState ──► View rebuild
 ```
 
-- **View**: `ConsumerWidget`가 `homeViewModelProvider`를 구독합니다.
-- **ViewModel**: `Notifier<HomeState>`가 loading/success/error 전환과 request orchestration을 담당합니다.
-- **Repository**: 비동기 sample JSON 응답과 의도적인 503 sample error를 제공합니다.
+- **View** — `ConsumerWidget` watches `homeViewModelProvider`. / `ConsumerWidget`가 `homeViewModelProvider`를 구독합니다.
+- **ViewModel** — `Notifier<HomeState>` owns request orchestration and lifecycle transitions. / `Notifier<HomeState>`가 request orchestration과 loading/success/error 전환을 담당합니다.
+- **Repository** — provides asynchronous sample JSON and a simulated 503 error path. / 비동기 sample JSON 응답과 의도적인 503 sample error를 제공합니다.
 
-## Tech Stack
+## Tech Stack / 기술 스택
 
 - Flutter / Dart
 - Riverpod (`flutter_riverpod` 2.6.1)
 - Material 3
 - Flutter widget tests
 
-## Run
+## Run / 실행
 
 ```bash
 flutter pub get
 flutter run
 ```
 
-외부 API key나 별도 credential 없이 sample repository로 실행됩니다.
+No external API key or credential is required; the app runs with the included sample repository.
+외부 API key나 별도 credential 없이 포함된 sample repository만으로 실행할 수 있습니다.
 
-## Validation
+## Validation / 검증
 
-이번 포트폴리오 화면 정리 과정에서 다음을 실제 확인했습니다.
+The following checks were completed during the portfolio polish pass.
+포트폴리오 마무리 과정에서 아래 항목을 실제로 검증했습니다.
 
 - `flutter analyze` — **No issues found**
 - `flutter test` — **3/3 tests passed**
-- Android Emulator — Android 15 / API 35에서 idle, loading, success, error interaction 확인
-- Android debug build — `build/app/outputs/flutter-apk/app-debug.apk` 생성 성공
-- Emulator runtime — RenderFlex overflow 및 Flutter runtime exception 없음
+- Android Emulator — verified idle, loading, success, and error interactions on Android 15 / API 35
+- Android debug build — successfully generated `build/app/outputs/flutter-apk/app-debug.apk`
+- Emulator runtime — no RenderFlex overflow or Flutter runtime exception observed
