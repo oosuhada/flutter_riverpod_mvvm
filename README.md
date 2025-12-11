@@ -6,7 +6,7 @@ Riverpod `Notifier`와 MVVM 구조에서 **View → ViewModel → Repository**�
 
 ## Preview
 
-<table>
+<table align="center">
   <tr>
     <td align="center"><strong>Idle</strong></td>
     <td align="center"><strong>Loading</strong></td>
