@@ -69,14 +69,3 @@ flutter run
 
 No external API key or credential is required; the app runs with the included sample repository.
 외부 API key나 별도 credential 없이 포함된 sample repository만으로 실행할 수 있습니다.
-
-## Validation / 검증
-
-The following checks were completed during the portfolio polish pass.
-포트폴리오 마무리 과정에서 아래 항목을 실제로 검증했습니다.
-
-- `flutter analyze` — **No issues found**
-- `flutter test` — **3/3 tests passed**
-- Android Emulator — verified idle, loading, success, and error interactions on Android 15 / API 35
-- Android debug build — successfully generated `build/app/outputs/flutter-apk/app-debug.apk`
-- Emulator runtime — no RenderFlex overflow or Flutter runtime exception observed
