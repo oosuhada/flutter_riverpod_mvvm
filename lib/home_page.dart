@@ -651,40 +651,32 @@ class _TraceLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (icon, message, color, background) = switch (state.status) {
+    final (icon, message, color) = switch (state.status) {
       RequestStatus.idle => (
           Icons.radio_button_checked_rounded,
           'Waiting for a UI event',
           const Color(0xFF717687),
-          const Color(0xFFF5F5F8),
         ),
       RequestStatus.loading => (
           Icons.sync_rounded,
           'ViewModel → Repository · request in flight',
           const Color(0xFF6559D9),
-          const Color(0xFFF1EFFF),
         ),
       RequestStatus.success => (
           Icons.check_circle_rounded,
           'Repository → ViewModel → View · state committed',
           const Color(0xFF17816D),
-          const Color(0xFFE8F7F2),
         ),
       RequestStatus.error => (
           Icons.error_rounded,
           'Repository → ViewModel · error captured, retry available',
           const Color(0xFFB44E62),
-          const Color(0xFFFFEFF2),
         ),
     };
 
-    return Container(
-      width: double.infinity,
+    return AppGlassInset(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: BorderRadius.circular(16),
-      ),
+      accentColor: color,
       child: Row(
         children: [
           Icon(icon, size: 16, color: color),
@@ -861,14 +853,10 @@ class _OutputBody extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 14),
-        Container(
-          width: double.infinity,
+        AppGlassInset(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          decoration: BoxDecoration(
-            color: const Color(0xFFF7F7FA),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: const Color(0xFFEEEFF4)),
-          ),
+          radius: 14,
+          accentColor: const Color(0xFF7668EA),
           child: Row(
             children: [
               const Icon(
@@ -925,14 +913,10 @@ class _EmptyOutput extends StatelessWidget {
   Widget build(BuildContext context) {
     final loading = state.status == RequestStatus.loading;
 
-    return Container(
-      width: double.infinity,
+    return AppGlassInset(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF7F7FA),
-        borderRadius: BorderRadius.circular(17),
-        border: Border.all(color: const Color(0xFFEEEFF4)),
-      ),
+      radius: 17,
+      accentColor: loading ? const Color(0xFF7365E7) : const Color(0xFF7D8190),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -994,16 +978,10 @@ class _ErrorOutput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
+    return AppGlassInset(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFFFFF3F5), Color(0xFFFFF8F8)],
-        ),
-        borderRadius: BorderRadius.circular(17),
-        border: Border.all(color: const Color(0xFFF8D8DE)),
-      ),
+      radius: 17,
+      accentColor: const Color(0xFFB24C60),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1064,12 +1042,9 @@ class _DataPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AppGlassInset(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
-      decoration: BoxDecoration(
-        color: const Color(0xFFF7F7FA),
-        borderRadius: BorderRadius.circular(13),
-      ),
+      radius: 13,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -1274,21 +1249,11 @@ class _Surface extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: padding,
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.94),
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFFE9EAF0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0C171A2B),
-            blurRadius: 22,
-            offset: Offset(0, 8),
-          ),
-        ],
+    return AppGlassSurface(
+      child: Padding(
+        padding: padding,
+        child: child,
       ),
-      child: child,
     );
   }
 }
