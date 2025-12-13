@@ -4,19 +4,6 @@ An interactive Flutter portfolio app that visualizes how state moves through **V
 
 Riverpod `Notifier`와 MVVM 구조에서 **View → ViewModel → Repository**로 상태가 이동하는 과정을 UI에서 직접 확인할 수 있도록 만든 Flutter 포트폴리오 앱입니다.
 
-## v1 → v2 / 성장 과정
-
-| | v1 · learning phase | v2 · renewal |
-| --- | --- | --- |
-| Focus | Riverpod + MVVM feature implementation | State flow readability and interaction hierarchy |
-| Controls | Standard Material buttons | Liquid Glass-inspired controls with layered state feedback |
-| Accessibility | Basic framework defaults | Semantic state feedback and minimum tap targets |
-| Motion | State changes without explicit motion policy | Reduced-motion-aware state transitions |
-| Rendering | Visual styling mixed with data surfaces | Glass-themed surface hierarchy for controls, state pipeline, output summary, and lifecycle metadata |
-| Platform | Generic Flutter presentation | Platform-aware visual system and Android Emulator QA |
-
-v1에서는 Riverpod과 MVVM 구조를 구현하고 상태 전환을 동작시키는 데 집중했습니다. v2에서는 같은 architecture demo를 유지하면서 adaptive UI, interaction hierarchy, accessibility, motion, rendering cost, platform convention을 함께 다듬었습니다. 조작 영역뿐 아니라 state pipeline, output snapshot, lifecycle 같은 보조 정보 surface에도 강도를 달리한 adaptive translucent control layer를 적용해 glass-themed surface hierarchy가 읽히도록 했고, 핵심 텍스트와 상태 데이터의 대비는 선명하게 유지했습니다.
-
 ## Preview
 
 <table align="center">
