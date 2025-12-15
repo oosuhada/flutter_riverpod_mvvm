@@ -67,6 +67,13 @@ flutter run
 No external API key or credential is required; the app runs with the included sample repository.
 외부 API key나 별도 credential 없이 포함된 sample repository만으로 실행할 수 있습니다.
 
-## Topics
+## Architecture & Topics / 아키텍처 및 주제
 
-[`dart`](https://github.com/topics/dart) · [`flutter`](https://github.com/topics/flutter) · [`mobile-app`](https://github.com/topics/mobile-app) · [`mvvm`](https://github.com/topics/mvvm) · [`repository-pattern`](https://github.com/topics/repository-pattern) · [`riverpod`](https://github.com/topics/riverpod) · [`state-management`](https://github.com/topics/state-management) · [`clean-architecture`](https://github.com/topics/clean-architecture) · [`flutter-app`](https://github.com/topics/flutter-app) · [`cross-platform`](https://github.com/topics/cross-platform) · [`dependency-injection`](https://github.com/topics/dependency-injection) · [`mobile-development`](https://github.com/topics/mobile-development) · [`flutter-development`](https://github.com/topics/flutter-development) · [`architecture`](https://github.com/topics/architecture) · [`sample-app`](https://github.com/topics/sample-app)
+**Architecture / 아키텍처**<br>
+[`mvvm`](https://github.com/topics/mvvm) · [`clean-architecture`](https://github.com/topics/clean-architecture) · [`repository-pattern`](https://github.com/topics/repository-pattern) · [`dependency-injection`](https://github.com/topics/dependency-injection) · [`reactive-state-management`](https://github.com/topics/reactive-state-management) · [`unidirectional-data-flow`](https://github.com/topics/unidirectional-data-flow) · [`separation-of-concerns`](https://github.com/topics/separation-of-concerns)
+
+**Project context / 프로젝트 맥락**<br>
+[`architecture`](https://github.com/topics/architecture) · [`cross-platform`](https://github.com/topics/cross-platform) · [`flutter-app`](https://github.com/topics/flutter-app) · [`flutter-development`](https://github.com/topics/flutter-development) · [`mobile-app`](https://github.com/topics/mobile-app) · [`mobile-development`](https://github.com/topics/mobile-development) · [`sample-app`](https://github.com/topics/sample-app) · [`state-management`](https://github.com/topics/state-management)
+
+**Implementation stack / 구현 스택**<br>
+[`dart`](https://github.com/topics/dart) · [`flutter`](https://github.com/topics/flutter) · [`riverpod`](https://github.com/topics/riverpod)
