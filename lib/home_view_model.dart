@@ -4,14 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 1. HomePage에서 사용하는 상태 클래스 정의
 class HomeState {
-  HomeState({
+  const HomeState({
     required this.user,
     required this.fetchTime,
+    required this.isLoading,
   });
   // 유저 정보를 가지고 오지 않았을 때에는 User가 null!
-  User? user;
+  final User? user;
   // 데이터를 가지고 온 시간. 마찬가치로 초기에는 null
-  DateTime? fetchTime;
+  final DateTime? fetchTime;
+  final bool isLoading;
 }
 
 // 2. ViewModel 구현 Notifier를 상속
@@ -22,14 +24,23 @@ class HomeViewModel extends Notifier<HomeState> {
   // 3. build 함수 : ViewModel의 최초 상태를 초기화
   @override
   HomeState build() {
-    return HomeState(
+    return const HomeState(
       user: null, // 초기 상태 null
       fetchTime: null,
+      isLoading: false,
     );
   }
 
   // 4. 유저 정보 UserRepository에서 가져와서 상태 업데이트 하는 로직 구현
   void getUser() async {
+    if (state.isLoading) return;
+
+    state = HomeState(
+      user: state.user,
+      fetchTime: state.fetchTime,
+      isLoading: true,
+    );
+
     UserRepository userRepository = UserRepository();
     User user = await userRepository.getUser();
     // 이렇게 사용하면 안됨. Notifier 클래스는 새로운 상태 객체를 사용해야 위젯에게 알려줌
@@ -39,6 +50,7 @@ class HomeViewModel extends Notifier<HomeState> {
     state = HomeState(
       user: user,
       fetchTime: DateTime.now(),
+      isLoading: false,
     );
   }
 }
