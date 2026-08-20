@@ -8,9 +8,9 @@ A compact Flutter learning project for practicing a **View → ViewModel → Rep
 
 ![Riverpod MVVM sample interface](.github/assets/ui-preview.png)
 
-위 화면은 `lib/home_page.dart`에 구현된 실제 학습 UI를 Flutter Web으로 빌드해 캡처했습니다. 현재 기본 `lib/main.dart`는 빈 `MaterialApp` scaffold이므로, README preview는 의도된 Riverpod 예제 entrypoint인 `home_page.dart`를 대상으로 합니다.
+위 이미지는 Android Emulator에서 기본 `lib/main.dart`를 실행하고 **사용자 데이터 가져오기**를 눌러 ViewModel 상태가 실제로 갱신된 화면을 캡처한 것입니다.
 
-The repository's default `lib/main.dart` is still a minimal blank scaffold. The screenshot intentionally renders `lib/home_page.dart`, which contains the actual Riverpod/MVVM exercise.
+This preview is captured from the default app entrypoint on an Android Emulator after fetching the sample repository data, so the Riverpod state update is visible in the UI.
 
 ## What I Practiced / 학습 내용
 
@@ -24,28 +24,22 @@ The repository's default `lib/main.dart` is still a minimal blank scaffold. The 
 
 ```text
 lib/
-├── home_page.dart        # Consumer UI and demo entrypoint
+├── home_page.dart        # Consumer UI
 ├── home_view_model.dart  # Riverpod ViewModel / state
 ├── user_repository.dart  # data-access practice layer
 ├── user.dart             # model
-└── main.dart             # minimal Flutter scaffold
+└── main.dart             # ProviderScope + app entrypoint
 ```
 
 ## Run / 실행
 
 ```bash
 flutter pub get
-flutter run -t lib/home_page.dart
-```
-
-Web build used for the screenshot:
-
-```bash
-flutter build web --release -t lib/home_page.dart
+flutter run
 ```
 
 ## Status / 상태
 
-이 저장소는 완성형 제품이 아니라 Riverpod과 MVVM 역할 분리를 익히기 위한 초기 학습 기록입니다. 2026-08-20 기준 의존성 설치와 Flutter Web release build를 다시 검증했습니다.
+이 저장소는 완성형 제품이 아니라 Riverpod과 MVVM 역할 분리를 익히기 위한 초기 학습 기록입니다. 2026-08-20 기준 기본 entrypoint를 실제 예제 UI로 정리하고 Android Emulator 실행을 다시 검증했습니다.
 
-This is intentionally kept as an early learning artifact rather than presented as a production application. Dependencies and the Flutter Web release build were re-validated on 2026-08-20.
+This is intentionally kept as an early learning artifact rather than presented as a production application. The default entrypoint and Android Emulator run were re-validated on 2026-08-20.

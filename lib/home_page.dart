@@ -2,59 +2,144 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_mvvm/home_view_model.dart';
 
-void main() {
-  // 이 앱에서 ViewModel을 RiverPod이 관리하게 해주게 해줌
-  runApp(const ProviderScope(child: MyApp()));
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class HomePage extends ConsumerWidget {
+  const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(homeViewModelProvider);
+    final hasUser = state.user != null;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Riverpod MVVM'),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 520),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Icon(Icons.account_circle_outlined, size: 72),
+                  const SizedBox(height: 18),
+                  Text(
+                    'View → ViewModel → Repository',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Riverpod Notifier가 repository의 사용자 데이터를 받아 UI 상태를 갱신하는 학습 예제입니다.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  const SizedBox(height: 28),
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Current state',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          const SizedBox(height: 18),
+                          _StateRow(
+                            label: '이름',
+                            value: state.user?.name ?? '아직 불러오지 않음',
+                          ),
+                          const Divider(height: 28),
+                          _StateRow(
+                            label: '나이',
+                            value: state.user?.age.toString() ?? '-',
+                          ),
+                          const Divider(height: 28),
+                          _StateRow(
+                            label: '최근 갱신',
+                            value: state.fetchTime == null
+                                ? '-'
+                                : _formatTime(state.fetchTime!),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  FilledButton.icon(
+                    onPressed: () {
+                      ref.read(homeViewModelProvider.notifier).getUser();
+                    },
+                    icon: Icon(hasUser ? Icons.refresh : Icons.download),
+                    label: Text(hasUser ? '데이터 다시 가져오기' : '사용자 데이터 가져오기'),
+                    style: FilledButton.styleFrom(
+                      minimumSize: const Size.fromHeight(52),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    hasUser
+                        ? 'Repository 응답이 새 HomeState로 교체되어 화면이 다시 그려졌습니다.'
+                        : '버튼을 누르면 1초 뒤 sample repository 응답이 상태에 반영됩니다.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
+  }
+
+  String _formatTime(DateTime time) {
+    String two(int value) => value.toString().padLeft(2, '0');
+    return '${two(time.hour)}:${two(time.minute)}:${two(time.second)}';
   }
 }
 
-class HomePage extends StatelessWidget {
+class _StateRow extends StatelessWidget {
+  const _StateRow({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      // ViewModel에 접근할 때 Consumer라는 위젯 사용
-      body: Consumer(
-        // 그 이유가 Consumer의 Builder 속성에서
-        // WidgetRef를 전달해주는데
-        // WidgetRef가 Notifier, 즉 ViewModel에 접근할 수 있게 해줌
-        builder: (context, ref, child) {
-          // ViewModel이 관리하는 상태에 접근 :
-          //    ref.watch에 ViewModelProvider를 넣어주면 ViewModel의 상태를 반환해주고
-          //    ViewModel이 업데이트 될 때마다 Consumer 위젯의 builder 가 재호출되어서 새로 그려짐
-          HomeState homeState = ref.watch(homeViewModelProvider);
-          // ref.read 함수도 있는데 read함수로 상태를 가지고 오면 업데이트 되어도 Consumer builder 재호출 안됨
-          // HomeState homeState = ref.read(homeViewModelProvider);
-          return Column(
-            children: [
-              Text('이름: ${homeState.user?.name ?? ""}'),
-              Text('나이: ${homeState.user?.age ?? ""}'),
-              Text('데이터 가져온 시간 : ${homeState.fetchTime ?? ""}'),
-              GestureDetector(
-                onTap: () {
-                  // ViewModel에 직접 접근할 때는 homeViewModelProvider.notifier 를 넣어주어서 접근
-                  // ViewModel 자체는 업데이트 되지 않기 때문에 read 사용
-                  HomeViewModel homeViewModel =
-                      ref.read(homeViewModelProvider.notifier);
-                  homeViewModel.getUser();
-                  print("클릭!");
-                },
-                child: Text('정보 가져오기'),
-              ),
-            ],
-          );
-        },
-      ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 82,
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
+        ),
+        Expanded(
+          child: Text(
+            value,
+            textAlign: TextAlign.end,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ),
+      ],
     );
   }
 }
