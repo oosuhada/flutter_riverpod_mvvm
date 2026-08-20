@@ -1,45 +1,53 @@
-# Flutter Riverpod MVVM Practice
+# Flutter Riverpod MVVM Architecture Lab
 
-Riverpod의 `Notifier`/`ProviderScope`를 사용해 **View → ViewModel → Repository** 흐름을 연습한 작은 Flutter MVVM 학습 프로젝트입니다.
+Riverpod `Notifier`를 사용해 **View → ViewModel → Repository** 흐름과 request lifecycle을 화면 자체에서 관찰할 수 있게 만든 Flutter 학습 포트폴리오 앱입니다.
 
-A compact Flutter learning project for practicing a **View → ViewModel → Repository** flow with Riverpod-managed state.
+단순히 데이터를 한 번 불러오는 예제에서 확장해 `idle → loading → success / error` 상태, immutable state version, request count, source metadata, retry/reset interaction을 한 화면에서 비교할 수 있습니다.
 
-## UI Preview / 구현 화면
+## UI Preview
 
-![Riverpod MVVM sample interface](.github/assets/ui-preview.png)
+![Riverpod MVVM success state](.github/assets/ui-preview.png)
 
-위 이미지는 Android Emulator에서 기본 `lib/main.dart`를 실행하고 **사용자 데이터 가져오기**를 눌러 ViewModel 상태가 실제로 갱신된 화면을 캡처한 것입니다.
+대표 화면은 Android Emulator에서 실제 `Fetch user` interaction을 수행한 뒤 캡처한 success state입니다.
 
-This preview is captured from the default app entrypoint on an Android Emulator after fetching the sample repository data, so the Riverpod state update is visible in the UI.
+### Interaction states
 
-## What I Practiced / 학습 내용
+| Idle | Loading |
+| --- | --- |
+| ![Idle state](.github/assets/portfolio/01-idle.png) | ![Loading state](.github/assets/portfolio/02-loading.png) |
 
-- `ProviderScope`를 통한 Riverpod 상태 관리 진입점 구성
-- `NotifierProvider` 기반 ViewModel 상태 갱신
-- `Consumer`/`WidgetRef`를 이용한 UI 상태 구독
-- Repository에서 사용자 데이터를 가져와 ViewModel 상태로 전달하는 흐름
-- 상태 변경 시 화면이 다시 그려지는 reactive UI 구조
+| Success | Error / Retry |
+| --- | --- |
+| ![Success state](.github/assets/portfolio/03-success.png) | ![Error state](.github/assets/portfolio/04-error-retry.png) |
 
-## Structure / 구조
+## What the app demonstrates
+
+- **View** — `ConsumerWidget`가 `homeViewModelProvider`를 구독하고 state 변화에 따라 다시 그려집니다.
+- **ViewModel** — `Notifier<HomeState>`가 request orchestration과 immutable state transition을 담당합니다.
+- **Repository** — mock REST/JSON 응답과 의도적인 503 sample error를 비동기로 제공합니다.
+- **Lifecycle** — `idle`, `loading`, `success`, `error`를 명시적인 enum state로 표현합니다.
+- **Traceability** — request count, state version, last updated time, source를 UI에 노출합니다.
+- **Interaction** — Fetch, Refresh, Simulate error, Reset to idle을 직접 실행할 수 있습니다.
+
+## Structure
 
 ```text
 lib/
-├── home_page.dart        # Consumer UI
-├── home_view_model.dart  # Riverpod ViewModel / state
-├── user_repository.dart  # data-access practice layer
-├── user.dart             # model
-└── main.dart             # ProviderScope + app entrypoint
+├── home_page.dart        # View / interactive architecture dashboard
+├── home_view_model.dart  # Riverpod Notifier + immutable HomeState
+├── user_repository.dart  # async sample data source + error simulation
+├── user.dart             # immutable user model
+└── main.dart             # ProviderScope + Material 3 app entrypoint
 ```
 
-## Run / 실행
+## Run & verify
 
 ```bash
 flutter pub get
+dart format --output=none --set-exit-if-changed lib test
+flutter analyze
+flutter test
 flutter run
 ```
 
-## Status / 상태
-
-이 저장소는 완성형 제품이 아니라 Riverpod과 MVVM 역할 분리를 익히기 위한 초기 학습 기록입니다. 2026-08-20 기준 기본 entrypoint를 실제 예제 UI로 정리하고 Android Emulator 실행을 다시 검증했습니다.
-
-This is intentionally kept as an early learning artifact rather than presented as a production application. The default entrypoint and Android Emulator run were re-validated on 2026-08-20.
+The portfolio screenshots in `.github/assets/portfolio/` were captured from the Android Emulator after performing the corresponding interactions.

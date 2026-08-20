@@ -1,23 +1,31 @@
 class User {
-  User({
+  const User({
     required this.name,
     required this.age,
+    required this.headline,
+    required this.learningTrack,
   });
-  String name;
-  int age;
 
-  //1. 네임드 생성자 (fromJson)
-  User.fromJson(Map<String, dynamic> map)
-      : this(
-          name: map['name'],
-          age: map['age'],
-        );
+  final String name;
+  final int age;
+  final String headline;
+  final String learningTrack;
 
-  //2. toJson 메서드
+  factory User.fromJson(Map<String, dynamic> map) {
+    return User(
+      name: map['name'] as String,
+      age: map['age'] as int,
+      headline: map['headline'] as String,
+      learningTrack: map['learningTrack'] as String,
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
-      "name": name,
-      "age": age,
+      'name': name,
+      'age': age,
+      'headline': headline,
+      'learningTrack': learningTrack,
     };
   }
 }
