@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_mvvm/home_view_model.dart';
+import 'package:flutter_riverpod_mvvm/v2_glass.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -1184,80 +1185,82 @@ class _ActionDock extends StatelessWidget {
   Widget build(BuildContext context) {
     final disabled = state.isLoading;
 
-    return _Surface(
-      padding: const EdgeInsets.all(14),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'State controls',
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            fontWeight: FontWeight.w900,
-                          ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      'Trigger the same architecture from one View.',
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: const Color(0xFF8C8F9E),
-                          ),
-                    ),
-                  ],
+    return AppGlassSurface(
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'State controls',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w900,
+                            ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'Trigger the same architecture from one View.',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: const Color(0xFF8C8F9E),
+                            ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              IconButton.filledTonal(
-                key: const ValueKey('reset-button'),
-                tooltip: 'Reset to idle',
-                onPressed: disabled ? null : onReset,
-                icon: const Icon(Icons.restart_alt_rounded),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          FilledButton.icon(
-            key: const ValueKey('fetch-button'),
-            onPressed: disabled ? null : onFetch,
-            icon: state.isLoading
-                ? const SizedBox(
-                    width: 17,
-                    height: 17,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
-                : const Icon(Icons.arrow_downward_rounded),
-            label: Text(state.hasUser ? 'Fetch again' : 'Fetch user'),
-          ),
-          const SizedBox(height: 9),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton.icon(
-                  key: const ValueKey('refresh-button'),
-                  onPressed: disabled ? null : onRefresh,
-                  icon: const Icon(Icons.refresh_rounded, size: 18),
-                  label: const Text('Refresh'),
+                IconButton.filledTonal(
+                  key: const ValueKey('reset-button'),
+                  tooltip: 'Reset to idle',
+                  onPressed: disabled ? null : onReset,
+                  icon: const Icon(Icons.restart_alt_rounded),
                 ),
-              ),
-              const SizedBox(width: 9),
-              Expanded(
-                child: OutlinedButton.icon(
-                  key: const ValueKey('error-button'),
-                  onPressed: disabled ? null : onError,
-                  icon: const Icon(Icons.bug_report_outlined, size: 18),
-                  label: const Text('Simulate error'),
+              ],
+            ),
+            const SizedBox(height: 12),
+            FilledButton.icon(
+              key: const ValueKey('fetch-button'),
+              onPressed: disabled ? null : onFetch,
+              icon: state.isLoading
+                  ? const SizedBox(
+                      width: 17,
+                      height: 17,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.arrow_downward_rounded),
+              label: Text(state.hasUser ? 'Fetch again' : 'Fetch user'),
+            ),
+            const SizedBox(height: 9),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    key: const ValueKey('refresh-button'),
+                    onPressed: disabled ? null : onRefresh,
+                    icon: const Icon(Icons.refresh_rounded, size: 18),
+                    label: const Text('Refresh'),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                const SizedBox(width: 9),
+                Expanded(
+                  child: OutlinedButton.icon(
+                    key: const ValueKey('error-button'),
+                    onPressed: disabled ? null : onError,
+                    icon: const Icon(Icons.bug_report_outlined, size: 18),
+                    label: const Text('Simulate error'),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
