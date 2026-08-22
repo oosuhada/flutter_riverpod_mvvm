@@ -66,3 +66,7 @@ flutter run
 
 No external API key or credential is required; the app runs with the included sample repository.
 외부 API key나 별도 credential 없이 포함된 sample repository만으로 실행할 수 있습니다.
+
+## Topics
+
+[`dart`](https://github.com/topics/dart) · [`flutter`](https://github.com/topics/flutter) · [`mobile-app`](https://github.com/topics/mobile-app) · [`mvvm`](https://github.com/topics/mvvm) · [`repository-pattern`](https://github.com/topics/repository-pattern) · [`riverpod`](https://github.com/topics/riverpod) · [`state-management`](https://github.com/topics/state-management)
