@@ -25,9 +25,6 @@ Riverpod `Notifier`와 MVVM 구조에서 **View → ViewModel → Repository**�
   </tr>
 </table>
 
-Captured from an Android Emulator after performing the actual interactions shown in each state.
-각 이미지는 Android Emulator에서 해당 상태로 실제 interaction을 수행한 뒤 캡처했습니다.
-
 ## What it does / 주요 기능
 
 - **Interactive lifecycle** — `Fetch`, `Refresh`, `Simulate error`, `Reset`으로 `idle → loading → success / error` 흐름을 직접 전환합니다.
